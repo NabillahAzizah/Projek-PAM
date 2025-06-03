@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Booking App</string>
+
+    <!-- Activities -->
+    <string name="gaming_zone">Gaming Zone</string>
+    <string name="game_corner">Game Corner</string>
+    <string name="booking_zone">Booking Zone</string>
+    <string name="preview_zone">Preview Zone</string>
+
+    <!-- Home Screen -->
+    <string name="choose_your_playstation">Choose your PlayStation</string>
+    <string name="play_station_1">Play Station 1</string>
+    <string name="play_station_2">Play Station 2</string>
+    <string name="play_station_3">Play Station 3</string>
+    <string name="play_station_4">Play Station 4</string>
+    <string name="play_station_5">Play Station 5</string>
+    <string name="available">Available</string>
+    <string name="occupied">Occupied</string>
+
+    <!-- Common -->
+    <string name="choose_your_session">Choose your session</string>
+    <string name="minutes">Minutes</string>
+    <string name="booking_now">Booking Now</string>
+    <string name="default_date">Monday, 9/29/2025</string>
+
+    <!-- Preview Screen -->
+    <string name="preview_instruction">Please confirm that the information is correct, then submit and show the submitted ticket details to the staff.</string>
+    <string name="date">Date</string>
+    <string name="duration">Duration</string>
+    <string name="session_prefix">Session</string>
+    <string name="session_label">Session</string>
+    <string name="default_email">Khernewah123@student.ub.ac.id</string>
+    <string name="default_booking_date">Monday, 26/05/2025</string>
+    <string name="default_session_time">Session 1\n08:45 - 09:45 am</string>
+    <string name="gaming_setup_image">Gaming setup image</string>
+
+    <!-- Time Slots -->
+    <string name="time_slot_1">08:45 - 09.45</string>
+    <string name="time_slot_2">09:45 - 10.45</string>
+    <string name="time_slot_3">10:45 - 11.30</string>
+    <string name="time_slot_4">12:45 - 13.45</string>
+    <string name="time_slot_5">13:45 - 14.45</string>
+    <string name="time_slot_6">14:45 - 15.30</string>
+
+    <string name="duration_60">60 Minutes</string>
+    <string name="duration_45">45 Minutes</string>
+
+    <!-- Messages -->
+    <string name="booking_confirmed">Booking confirmed successfully!</string>
+    <string name="playstation_occupied">PlayStation is currently occupied</string>
+    <string name="no_available_time_slots">No available time slots</string>
+    <string name="for_selected_date">for selected date</string>
+    <string name="available_sessions">Available Sessions for Selected Date</string>
+    <string name="no_playstation_available_text">No PlayStation available</string>
+    <string name="refresh_list">Refresh list</string>
+
+    <!-- Content Descriptions -->
+    <string name="back_button">Back</string>
+    <string name="previous_date">Previous date</string>
+    <string name="next_date">Next date</string>
+    <string name="playstation_controller">PlayStation controller</string>
+    <string name="no_schedule_available">No schedule available</string>
+    <string name="bookings_tab">Bookings</string>
+    <string name="profile_tab">Profile</string>
+    <string name="bookings">Bookings</string>
+    <string name="profile">Profile</string>
+    <string name="go_to_booking">Go to booking</string>
+    <string name="no_playstation_available">No PlayStation available</string>
+
+</resources>

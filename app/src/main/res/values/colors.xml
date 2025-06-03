@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="purple_primary">#8B5CF6</color>
+    <color name="purple_dark">#7C3AED</color>
+    <color name="purple_light">#A78BFA</color>
+
+    <!-- Orange/Yellow Colors -->
+    <color name="orange_primary">#F59E0B</color>
+    <color name="orange_light">#FCD34D</color>
+
+    <!-- Blue Colors -->
+    <color name="blue_primary">#3B82F6</color>
+    <color name="blue_light">#60A5FA</color>
+
+    <!-- Gray Colors -->
+    <color name="gray_light">#D1D5DB</color>
+    <color name="gray_medium">#6B7280</color>
+    <color name="gray_dark">#374151</color>
+
+    <!-- Basic Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

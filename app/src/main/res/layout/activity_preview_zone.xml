@@ -2,8 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/orange_gradient_bg">
+    android:layout_height="match_parent">
+
+    <!-- Curve Orange Background -->
+    <ImageView
+        android:id="@+id/iv_curve_background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/prevzone_orange_curve"
+        android:layout_alignParentTop="true" />
 
     <!-- Header -->
     <RelativeLayout
@@ -11,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="20dp"
+        android:translationZ="2dp">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -31,7 +40,7 @@
             android:layout_centerInParent="true"
             android:text="@string/preview_zone"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="35sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -59,7 +68,8 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        android:translationZ="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,7 +152,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -207,7 +217,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/blue_gradient_bg"
+            android:background="#89D0F0"
             android:gravity="center"
             android:text="@string/booking_now"
             android:textColor="@android:color/white"
@@ -228,18 +238,18 @@
         android:baselineAligned="false">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_bookmark"
+            android:src="@drawable/av_booked"
             android:layout_gravity="center"
             android:contentDescription="@string/bookings_tab" />
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_profile"
+            android:src="@drawable/av_profile"
             android:layout_gravity="center"
             android:contentDescription="@string/profile_tab" />
 

@@ -1,13 +1,18 @@
+//BookingZoneActivity.java
 package com.example.bookproject;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,16 +24,25 @@ import java.util.Locale;
 
 public class BookingZoneActivity extends AppCompatActivity {
 
-    private TextView tvSelectedDate, tvPlayStationName;
+    private TextView tvSelectedDate;
     private RecyclerView rvTimeSlots;
     private View calendarOverlay;
     private CalendarView calendarView;
     private ImageView ivBack, ivPrevDate, ivNextDate;
+
+    // PlayStation card elements
+    private CardView playstationCard;
+    private RelativeLayout cardBackground;
+    private TextView tvPlaystationCardName;
+    private ImageView ivController;
+
     private TimeSlotAdapter timeSlotAdapter;
     private List<TimeSlot> timeSlotList;
     private Calendar selectedCalendar;
     private String playstationName;
     private int playstationId;
+    private int playstationColor; // Add color variable
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,7 @@ public class BookingZoneActivity extends AppCompatActivity {
 
         getIntentData();
         initViews();
+        setupPlayStationCard(); //with color based clicked
         setupCalendar();
         setupTimeSlots();
         setupClickListeners();
@@ -46,6 +61,7 @@ public class BookingZoneActivity extends AppCompatActivity {
         Intent intent = getIntent();
         playstationId = intent.getIntExtra("playstation_id", 1);
         playstationName = intent.getStringExtra("playstation_name");
+        playstationColor = intent.getIntExtra("playstation_color", PlayStationAdapter.COLOR_ORANGE);
         if (playstationName == null) {
             playstationName = "Play Station 1";
         }
@@ -54,17 +70,51 @@ public class BookingZoneActivity extends AppCompatActivity {
     private void initViews() {
         ivBack = findViewById(R.id.iv_back);
         tvSelectedDate = findViewById(R.id.tv_selected_date);
-        tvPlayStationName = findViewById(R.id.tv_playstation_name);
         ivPrevDate = findViewById(R.id.iv_prev_date);
         ivNextDate = findViewById(R.id.iv_next_date);
         rvTimeSlots = findViewById(R.id.rv_time_slots);
         calendarOverlay = findViewById(R.id.calendar_overlay);
         calendarView = calendarOverlay.findViewById(R.id.calendar_view);
 
+        // PlayStation card elements (add these to your layout)
+        playstationCard = findViewById(R.id.playstation_card);
+        cardBackground = findViewById(R.id.card_background);
+        tvPlaystationCardName = findViewById(R.id.tv_playstation_name);
+        ivController = findViewById(R.id.iv_controller);
+
         selectedCalendar = Calendar.getInstance();
 
-        // Set PlayStation name
-        tvPlayStationName.setText(playstationName);
+        // Set PlayStation name dengan null check
+        if (tvPlaystationCardName != null) {
+            tvPlaystationCardName.setText(playstationName);
+        }
+    }
+
+    private void setupPlayStationCard() {
+        // Tambahkan null checks untuk mencegah crash
+        if (tvPlaystationCardName != null) {
+            tvPlaystationCardName.setText(playstationName);
+        }
+        // Setup card background color based on PlayStation color
+        GradientDrawable gradient = new GradientDrawable();
+        gradient.setCornerRadius(32f); // Match the corner radius from your design
+
+        if (playstationColor == PlayStationAdapter.COLOR_ORANGE) {
+            // Orange gradient
+            gradient.setColors(new int[]{
+                    Color.parseColor("#FCD34D"), // Light yellow/orange
+                    Color.parseColor("#F59E0B")  // Darker orange
+            });
+        } else {
+            // Mint/Turquoise gradient
+            gradient.setColors(new int[]{
+                    Color.parseColor("#A7F3D0"), // Light mint
+                    Color.parseColor("#34D399")  // Darker mint/green
+            });
+        }
+
+        gradient.setOrientation(GradientDrawable.Orientation.TL_BR);
+        cardBackground.setBackground(gradient);
     }
 
     private void setupCalendar() {
@@ -249,6 +299,7 @@ public class BookingZoneActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PreviewZoneActivity.class);
         intent.putExtra("playstation_id", playstationId);
         intent.putExtra("playstation_name", playstationName);
+        intent.putExtra("playstation_color", playstationColor); // Pass color to PreviewZone
         intent.putExtra("session_number", timeSlot.getSessionNumber());
         intent.putExtra("time_range", timeSlot.getTimeRange());
         intent.putExtra("duration", timeSlot.getDuration());

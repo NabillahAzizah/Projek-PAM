@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     private RecyclerView rvPlaystationCards;
     private PlayStationAdapter playstationAdapter;
     private List<PlayStation> playstationList;
@@ -20,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViews();
         setupPlayStationCards();
     }
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BookingZoneActivity.class);
         intent.putExtra("playstation_id", playStation.getId());
         intent.putExtra("playstation_name", playStation.getName());
+        intent.putExtra("playstation_color", playStation.getColorType());
         startActivity(intent);
     }
 

@@ -2,17 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/purple_gradient_bg">
+    android:layout_height="match_parent">
+
+    <!-- Curve Purple Background -->
+    <ImageView
+        android:id="@+id/iv_curve_background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignBottom="@+id/header_layout"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="-30dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bookzone_purple_curve" />
 
     <!-- Header -->
     <RelativeLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="20dp">
+        android:paddingVertical="20dp"
+        android:translationZ="2dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +32,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/game_corner"
             android:textColor="@android:color/white"
-            android:textSize="32sp"
+            android:textSize="35sp"
             android:textStyle="bold"
             android:shadowColor="#40000000"
             android:shadowDx="2"
@@ -57,7 +68,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_controller"
+            android:src="@drawable/ic_playstat"
             android:alpha="0.5"
             android:contentDescription="@string/no_playstation_available" />
 
@@ -97,18 +108,9 @@
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_bookmark"
+                android:src="@drawable/av_booked"
                 android:layout_gravity="center"
                 android:contentDescription="@string/bookings_tab" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bookings"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -124,19 +126,9 @@
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_profile"
+                android:src="@drawable/av_profile"
                 android:layout_gravity="center"
                 android:contentDescription="@string/profile_tab" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                android:textStyle="bold" />
-
         </LinearLayout>
 
     </LinearLayout>

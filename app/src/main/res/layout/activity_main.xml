@@ -49,7 +49,6 @@
         android:layout_below="@id/header_layout"
         android:layout_above="@id/bottom_navigation"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
         android:clipToPadding="false"
         android:paddingTop="5dp"
         android:paddingBottom="5dp" />
@@ -87,14 +86,13 @@
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/purple_primary"
         android:orientation="horizontal"
         android:gravity="center"
         android:elevation="8dp"
-        android:baselineAligned="false"
-        android:paddingVertical="8dp">
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"

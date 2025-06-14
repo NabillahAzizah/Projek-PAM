@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "240785521270",
+    "project_id": "projek-akhir-2c649",
+    "storage_bucket": "projek-akhir-2c649.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240785521270:android:2db435a5fb4d8821b03d57",
+        "android_client_info": {
+          "package_name": "com.example.garnerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240785521270-gk094uhdkb96h0ff5ggnvmtkh7tebb16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.garnerapp",
+            "certificate_hash": "3f0c2e9b7ce821dddff235c7df2b84beb2bdacf5"
+          }
+        },
+        {
+          "client_id": "240785521270-kcds4b854mfc9dg46dkoqajpdu0ks095.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyOttCLXgPolzTKGUWr00TEDWnPCtxilA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240785521270-kcds4b854mfc9dg46dkoqajpdu0ks095.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

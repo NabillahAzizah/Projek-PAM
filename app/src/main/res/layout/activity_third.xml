@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ThirdActivity">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Please Sign Up\nto Order"
+        android:textColor="#FFA726"
+        android:textSize="36sp" />
+
+    <!-- Gamepad kiri -->
+    <ImageView
+        android:id="@+id/gamepadLeft"
+        android:layout_width="167dp"
+        android:layout_height="159dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="-47dp"
+        android:layout_marginTop="165dp"
+        android:rotation="-133"
+        android:src="@drawable/console_2" />
+
+    <!-- Gamepad kanan -->
+    <ImageView
+        android:id="@+id/gamepadRight"
+        android:layout_width="156dp"
+        android:layout_height="178dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="-30dp"
+        android:rotation="15"
+        android:src="@drawable/console_1" />
+
+    <View
+        android:id="@+id/purpleBubble"
+        android:layout_width="match_parent"
+        android:layout_height="610dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_purple_bubble" />
+
+    <!-- Form Container -->
+    <LinearLayout
+        android:id="@+id/formContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/purpleBubble"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Sign Up Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Sign Up"
+            android:textColor="@android:color/white"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <!-- Sign In Link -->
+        <TextView
+            android:id="@+id/signInLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Already have an account? Sign In"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <!-- Username -->
+        <EditText
+            android:id="@+id/usernameInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edittext_white"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Username"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="#888888"
+            android:textSize="16dp" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edittext_white"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Email Address"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="#888888"
+            android:textSize="16dp" />
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/bg_edittext_white"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="#888888"
+            android:textSize="16dp" />
+
+        <!-- OR separator -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_extralight"
+                android:text="  OR  "
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- Sign Up Button -->
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#89D0F0"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <!-- Google Sign Up -->
+        <LinearLayout
+            android:id="@+id/googleSignUpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_button_google"
+            android:backgroundTint="#FFB300"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/ic_google_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Sign Up with Google"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

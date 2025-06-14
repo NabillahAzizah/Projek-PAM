@@ -1,0 +1,4 @@
+// Hilangkan bagian alias plugin
+// Biarkan kosong atau pakai default:
+rootProject.name = "projek_akhir"
+include ':app'

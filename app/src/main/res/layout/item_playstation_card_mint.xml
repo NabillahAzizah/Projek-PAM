@@ -14,7 +14,7 @@
         android:layout_marginRight="10dp"
         android:padding="15dp"
         android:orientation="horizontal"
-        android:background="@drawable/bg_item"
+        android:background="@drawable/bg_item2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">

@@ -1,15 +1,13 @@
 //PlayStationAdapter.java
 package com.example.bookproject;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -31,10 +29,26 @@ public class PlayStationAdapter extends RecyclerView.Adapter<PlayStationAdapter.
         this.listener = listener;
     }
 
+    // Logika untuk selang-seling layout seperti partner
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2; // 0 = orange (bg_item), 1 = mint (bg_item2)
+    }
+
     @NonNull
     @Override
     public PlayStationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playstation_card, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view;
+
+        if (viewType == 0) {
+            // Orange background - bg_item.png
+            view = inflater.inflate(R.layout.item_playstation_card, parent, false);
+        } else {
+            // Mint background - bg_item2.png
+            view = inflater.inflate(R.layout.item_playstation_card_mint, parent, false);
+        }
+
         return new PlayStationViewHolder(view);
     }
 
@@ -51,14 +65,12 @@ public class PlayStationAdapter extends RecyclerView.Adapter<PlayStationAdapter.
 
     class PlayStationViewHolder extends RecyclerView.ViewHolder {
         private TextView tvPlaystationName;
-        private RelativeLayout cardBackground;
-        private CardView cardView;
+        private LinearLayout psLayout;
 
         public PlayStationViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvPlaystationName = itemView.findViewById(R.id.tv_playstation_name);
-            cardBackground = itemView.findViewById(R.id.card_background);
-            cardView = (CardView) itemView;
+            tvPlaystationName = itemView.findViewById(R.id.tv_name);
+            psLayout = itemView.findViewById(R.id.ps_layout);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,35 +86,15 @@ public class PlayStationAdapter extends RecyclerView.Adapter<PlayStationAdapter.
         public void bind(MainActivity.PlayStation playstation) {
             tvPlaystationName.setText(playstation.getName());
 
-            // Set background color based on card type
-            GradientDrawable gradient = new GradientDrawable();
-            gradient.setCornerRadius(32f); // 12dp converted to pixels approximately
+            // Background sudah diatur di layout XML masing-masing
+            // Orange card menggunakan bg_item, Mint card menggunakan bg_item2
 
-            if (playstation.getColorType() == COLOR_ORANGE) {
-                // Orange gradient like Figma
-                gradient.setColors(new int[]{
-                        Color.parseColor("#FCD34D"), // Light yellow/orange
-                        Color.parseColor("#F59E0B")  // Darker orange
-                });
-            } else {
-                // Mint/Turquoise gradient like Figma
-                gradient.setColors(new int[]{
-                        Color.parseColor("#A7F3D0"), // Light mint
-                        Color.parseColor("#34D399")  // Darker mint/green
-                });
-            }
-
-            gradient.setOrientation(GradientDrawable.Orientation.TL_BR);
-            cardBackground.setBackground(gradient);
-
-            // Change card appearance based on status
+            // Change appearance based on status
             if (playstation.getStatus().equals("Occupied")) {
                 itemView.setAlpha(0.6f);
-                cardView.setCardElevation(2f);
                 itemView.setEnabled(false);
             } else {
                 itemView.setAlpha(1.0f);
-                cardView.setCardElevation(8f);
                 itemView.setEnabled(true);
             }
         }

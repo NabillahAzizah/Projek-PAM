@@ -1,5 +1,6 @@
 //MainActivity.java
 package com.example.bookproject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -31,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private void setupPlayStationCards() {
         playstationList = new ArrayList<>();
 
-        // Add 5 PlayStation cards with alternating colors
-        playstationList.add(new PlayStation(1, "Play Station 1", "Available", PlayStationAdapter.COLOR_ORANGE));
-        playstationList.add(new PlayStation(2, "Play Station 2", "Available", PlayStationAdapter.COLOR_MINT));
-        playstationList.add(new PlayStation(3, "Play Station 3", "Available", PlayStationAdapter.COLOR_ORANGE));
-        playstationList.add(new PlayStation(4, "Play Station 4", "Available", PlayStationAdapter.COLOR_MINT));
-        playstationList.add(new PlayStation(5, "Play Station 5", "Available", PlayStationAdapter.COLOR_ORANGE));
+        // Add 5 PlayStation cards - semua menggunakan bg_item.png yang sama
+        playstationList.add(new PlayStation(1, "Play Station 1", "Available"));
+        playstationList.add(new PlayStation(2, "Play Station 2", "Available"));
+        playstationList.add(new PlayStation(3, "Play Station 3", "Available"));
+        playstationList.add(new PlayStation(4, "Play Station 4", "Available"));
+        playstationList.add(new PlayStation(5, "Play Station 5", "Available"));
 
         playstationAdapter = new PlayStationAdapter(playstationList, new PlayStationAdapter.OnPlayStationClickListener() {
             @Override
@@ -57,7 +58,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BookingZoneActivity.class);
         intent.putExtra("playstation_id", playStation.getId());
         intent.putExtra("playstation_name", playStation.getName());
-        intent.putExtra("playstation_color", playStation.getColorType());
+
+        // Pass card type berdasarkan posisi untuk menentukan background
+        int cardType = (playStation.getId() - 1) % 2; // 0 = orange, 1 = mint
+        intent.putExtra("card_type", cardType);
+
         startActivity(intent);
     }
 
@@ -70,18 +75,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // PlayStation data model with color support
+    // PlayStation data model - simplified without color type
     public static class PlayStation {
         private int id;
         private String name;
         private String status;
-        private int colorType;
 
-        public PlayStation(int id, String name, String status, int colorType) {
+        public PlayStation(int id, String name, String status) {
             this.id = id;
             this.name = name;
             this.status = status;
-            this.colorType = colorType;
         }
 
         public int getId() {
@@ -98,14 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         public void setStatus(String status) {
             this.status = status;
-        }
-
-        public int getColorType() {
-            return colorType;
-        }
-
-        public void setColorType(int colorType) {
-            this.colorType = colorType;
         }
     }
 }

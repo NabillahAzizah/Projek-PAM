@@ -1,18 +1,16 @@
-//BookingZoneActivity.java
+//BookingZoneActivity.java - FIXED VERSION
 package com.example.bookproject;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +29,7 @@ public class BookingZoneActivity extends AppCompatActivity {
     private ImageView ivBack, ivPrevDate, ivNextDate;
 
     // PlayStation card elements
-    private CardView playstationCard;
-    private RelativeLayout cardBackground;
+    private LinearLayout cardBackground;
     private TextView tvPlaystationCardName;
     private ImageView ivController;
 
@@ -41,8 +38,7 @@ public class BookingZoneActivity extends AppCompatActivity {
     private Calendar selectedCalendar;
     private String playstationName;
     private int playstationId;
-    private int playstationColor; // Add color variable
-
+    private int cardType; // 0 = orange (bg_item), 1 = mint (bg_item2)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +47,23 @@ public class BookingZoneActivity extends AppCompatActivity {
 
         getIntentData();
         initViews();
-        setupPlayStationCard(); //with color based clicked
-        setupCalendar();
+        setupPlayStationCard();
         setupTimeSlots();
         setupClickListeners();
+        // JANGAN panggil setupCalendar() di sini - akan crash!
     }
 
     private void getIntentData() {
         Intent intent = getIntent();
         playstationId = intent.getIntExtra("playstation_id", 1);
         playstationName = intent.getStringExtra("playstation_name");
-        playstationColor = intent.getIntExtra("playstation_color", PlayStationAdapter.COLOR_ORANGE);
+        cardType = intent.getIntExtra("card_type", 0); // Default orange
+
         if (playstationName == null) {
             playstationName = "Play Station 1";
         }
+
+        Log.d("BookingZone", "PlayStation: " + playstationName + ", CardType: " + cardType);
     }
 
     private void initViews() {
@@ -74,10 +73,11 @@ public class BookingZoneActivity extends AppCompatActivity {
         ivNextDate = findViewById(R.id.iv_next_date);
         rvTimeSlots = findViewById(R.id.rv_time_slots);
         calendarOverlay = findViewById(R.id.calendar_overlay);
-        calendarView = calendarOverlay.findViewById(R.id.calendar_view);
 
-        // PlayStation card elements (add these to your layout)
-        playstationCard = findViewById(R.id.playstation_card);
+        // JANGAN INIT CALENDAR VIEW DI SINI - AKAN NULL!
+        // calendarView = calendarOverlay.findViewById(R.id.calendar_view); // CRASH!
+
+        // PlayStation card elements
         cardBackground = findViewById(R.id.card_background);
         tvPlaystationCardName = findViewById(R.id.tv_playstation_name);
         ivController = findViewById(R.id.iv_controller);
@@ -88,71 +88,77 @@ public class BookingZoneActivity extends AppCompatActivity {
         if (tvPlaystationCardName != null) {
             tvPlaystationCardName.setText(playstationName);
         }
+
+        // Update date display
+        updateDateDisplay();
     }
 
     private void setupPlayStationCard() {
-        // Tambahkan null checks untuk mencegah crash
+        // Set PlayStation name
         if (tvPlaystationCardName != null) {
             tvPlaystationCardName.setText(playstationName);
         }
-        // Setup card background color based on PlayStation color
-        GradientDrawable gradient = new GradientDrawable();
-        gradient.setCornerRadius(32f); // Match the corner radius from your design
 
-        if (playstationColor == PlayStationAdapter.COLOR_ORANGE) {
-            // Orange gradient
-            gradient.setColors(new int[]{
-                    Color.parseColor("#FCD34D"), // Light yellow/orange
-                    Color.parseColor("#F59E0B")  // Darker orange
-            });
-        } else {
-            // Mint/Turquoise gradient
-            gradient.setColors(new int[]{
-                    Color.parseColor("#A7F3D0"), // Light mint
-                    Color.parseColor("#34D399")  // Darker mint/green
-            });
+        // Set background berdasarkan card type
+        if (cardBackground != null) {
+            if (cardType == 0) {
+                // Orange card - bg_item.png
+                cardBackground.setBackgroundResource(R.drawable.bg_item);
+                Log.d("BookingZone", "Set orange background");
+            } else {
+                // Mint card - bg_item2.png
+                cardBackground.setBackgroundResource(R.drawable.bg_item2);
+                Log.d("BookingZone", "Set mint background");
+            }
         }
-
-        gradient.setOrientation(GradientDrawable.Orientation.TL_BR);
-        cardBackground.setBackground(gradient);
     }
 
+    // SETUP CALENDAR HANYA SAAT DIBUTUHKAN - TIDAK DI onCreate!
     private void setupCalendar() {
-        updateDateDisplay();
+        if (calendarView == null) {
+            Log.e("BookingZone", "calendarView is null in setupCalendar");
+            return;
+        }
 
-        // Set calendar date range (today + 3 days)
-        Calendar today = Calendar.getInstance();
-        Calendar maxDate = Calendar.getInstance();
-        maxDate.add(Calendar.DAY_OF_MONTH, 3);
+        try {
+            // Set calendar date range (today + 3 days)
+            Calendar today = Calendar.getInstance();
+            Calendar maxDate = Calendar.getInstance();
+            maxDate.add(Calendar.DAY_OF_MONTH, 3);
 
-        calendarView.setMinDate(today.getTimeInMillis());
-        calendarView.setMaxDate(maxDate.getTimeInMillis());
-        calendarView.setDate(selectedCalendar.getTimeInMillis());
+            calendarView.setMinDate(today.getTimeInMillis());
+            calendarView.setMaxDate(maxDate.getTimeInMillis());
+            calendarView.setDate(selectedCalendar.getTimeInMillis());
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar clickedDate = Calendar.getInstance();
-                clickedDate.set(year, month, dayOfMonth);
+            calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                    Calendar clickedDate = Calendar.getInstance();
+                    clickedDate.set(year, month, dayOfMonth);
 
-                // Only allow today + 3 days
-                Calendar today = Calendar.getInstance();
-                Calendar maxAllowed = Calendar.getInstance();
-                maxAllowed.add(Calendar.DAY_OF_MONTH, 3);
+                    // Only allow today + 3 days
+                    Calendar today = Calendar.getInstance();
+                    Calendar maxAllowed = Calendar.getInstance();
+                    maxAllowed.add(Calendar.DAY_OF_MONTH, 3);
 
-                if (clickedDate.getTimeInMillis() >= today.getTimeInMillis() &&
-                        clickedDate.getTimeInMillis() <= maxAllowed.getTimeInMillis()) {
-                    selectedCalendar.set(year, month, dayOfMonth);
-                    updateDateDisplay();
-                    hideCalendar();
-                    refreshTimeSlots();
-                } else {
-                    Toast.makeText(BookingZoneActivity.this,
-                            "Please select a date within the next 3 days",
-                            Toast.LENGTH_SHORT).show();
+                    if (clickedDate.getTimeInMillis() >= today.getTimeInMillis() &&
+                            clickedDate.getTimeInMillis() <= maxAllowed.getTimeInMillis()) {
+                        selectedCalendar.set(year, month, dayOfMonth);
+                        updateDateDisplay();
+                        hideCalendar();
+                        refreshTimeSlots();
+                    } else {
+                        Toast.makeText(BookingZoneActivity.this,
+                                "Please select a date within the next 3 days",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+
+            Log.d("BookingZone", "Calendar setup completed successfully");
+        } catch (Exception e) {
+            Log.e("BookingZone", "Error setting up calendar: " + e.getMessage());
+        }
     }
 
     private void setupTimeSlots() {
@@ -176,74 +182,76 @@ public class BookingZoneActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        tvSelectedDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCalendar();
-            }
-        });
-
-        ivPrevDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar today = Calendar.getInstance();
-                Calendar newDate = (Calendar) selectedCalendar.clone();
-                newDate.add(Calendar.DAY_OF_MONTH, -1);
-
-                if (newDate.getTimeInMillis() >= today.getTimeInMillis()) {
-                    selectedCalendar = newDate;
-                    updateDateDisplay();
-                    refreshTimeSlots();
-                } else {
-                    Toast.makeText(BookingZoneActivity.this,
-                            "Cannot select past dates",
-                            Toast.LENGTH_SHORT).show();
+        if (ivBack != null) {
+            ivBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
                 }
-            }
-        });
+            });
+        }
 
-        ivNextDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar maxDate = Calendar.getInstance();
-                maxDate.add(Calendar.DAY_OF_MONTH, 3);
-                Calendar newDate = (Calendar) selectedCalendar.clone();
-                newDate.add(Calendar.DAY_OF_MONTH, 1);
-
-                if (newDate.getTimeInMillis() <= maxDate.getTimeInMillis()) {
-                    selectedCalendar = newDate;
-                    updateDateDisplay();
-                    refreshTimeSlots();
-                } else {
-                    Toast.makeText(BookingZoneActivity.this,
-                            "Cannot select dates beyond 3 days",
-                            Toast.LENGTH_SHORT).show();
+        if (tvSelectedDate != null) {
+            tvSelectedDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCalendar();
                 }
-            }
-        });
+            });
+        }
 
-        // Hide calendar when clicking outside (background)
-        calendarOverlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideCalendar();
-            }
-        });
+        if (ivPrevDate != null) {
+            ivPrevDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar today = Calendar.getInstance();
+                    Calendar newDate = (Calendar) selectedCalendar.clone();
+                    newDate.add(Calendar.DAY_OF_MONTH, -1);
 
-        // Prevent calendar from closing when clicking on calendar itself
-        calendarView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Do nothing - prevent event bubbling
-            }
-        });
+                    if (newDate.getTimeInMillis() >= today.getTimeInMillis()) {
+                        selectedCalendar = newDate;
+                        updateDateDisplay();
+                        refreshTimeSlots();
+                    } else {
+                        Toast.makeText(BookingZoneActivity.this,
+                                "Cannot select past dates",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        if (ivNextDate != null) {
+            ivNextDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar maxDate = Calendar.getInstance();
+                    maxDate.add(Calendar.DAY_OF_MONTH, 3);
+                    Calendar newDate = (Calendar) selectedCalendar.clone();
+                    newDate.add(Calendar.DAY_OF_MONTH, 1);
+
+                    if (newDate.getTimeInMillis() <= maxDate.getTimeInMillis()) {
+                        selectedCalendar = newDate;
+                        updateDateDisplay();
+                        refreshTimeSlots();
+                    } else {
+                        Toast.makeText(BookingZoneActivity.this,
+                                "Cannot select dates beyond 3 days",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        // Hide calendar when clicking outside
+        if (calendarOverlay != null) {
+            calendarOverlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideCalendar();
+                }
+            });
+        }
     }
 
     private void updateDateDisplay() {
@@ -253,10 +261,12 @@ public class BookingZoneActivity extends AppCompatActivity {
         String dayName = dayFormat.format(selectedCalendar.getTime());
         String dateString = dateFormat.format(selectedCalendar.getTime());
 
-        tvSelectedDate.setText(dayName + ", " + dateString);
+        if (tvSelectedDate != null) {
+            tvSelectedDate.setText(dayName + ", " + dateString);
+        }
 
         // Update calendar overlay date if it's visible
-        if (calendarOverlay.getVisibility() == View.VISIBLE) {
+        if (calendarOverlay != null && calendarOverlay.getVisibility() == View.VISIBLE) {
             TextView overlayDate = calendarOverlay.findViewById(R.id.tv_selected_date);
             if (overlayDate != null) {
                 overlayDate.setText(dayName + ", " + dateString);
@@ -265,8 +275,41 @@ public class BookingZoneActivity extends AppCompatActivity {
     }
 
     private void showCalendar() {
+        Log.d("BookingZone", "showCalendar called");
+
+        if (calendarOverlay == null) {
+            Log.e("BookingZone", "calendarOverlay is null");
+            Toast.makeText(this, "Calendar not available", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // INIT CALENDAR VIEW SAAT PERTAMA KALI DIBUTUHKAN
+        if (calendarView == null) {
+            Log.d("BookingZone", "Initializing calendar view for first time");
+            calendarView = calendarOverlay.findViewById(R.id.calendar_view);
+
+            if (calendarView != null) {
+                setupCalendar(); // Setup calendar listener
+
+                // Setup click listener untuk calendar view
+                calendarView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Do nothing - prevent event bubbling
+                    }
+                });
+            } else {
+                Log.e("BookingZone", "Failed to find calendar_view in overlay");
+                Toast.makeText(this, "Calendar view not found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
         calendarOverlay.setVisibility(View.VISIBLE);
-        calendarView.setDate(selectedCalendar.getTimeInMillis());
+
+        if (calendarView != null) {
+            calendarView.setDate(selectedCalendar.getTimeInMillis());
+        }
 
         // Update PlayStation name in overlay
         TextView overlayPlaystationName = calendarOverlay.findViewById(R.id.tv_playstation_name);
@@ -274,12 +317,26 @@ public class BookingZoneActivity extends AppCompatActivity {
             overlayPlaystationName.setText(playstationName);
         }
 
+        // Update calendar overlay card background
+        LinearLayout overlayCardBackground = calendarOverlay.findViewById(R.id.card_background);
+        if (overlayCardBackground != null) {
+            if (cardType == 0) {
+                overlayCardBackground.setBackgroundResource(R.drawable.bg_item);
+            } else {
+                overlayCardBackground.setBackgroundResource(R.drawable.bg_item2);
+            }
+        }
+
         // Update date in overlay
         updateDateDisplay();
+
+        Log.d("BookingZone", "Calendar overlay shown successfully");
     }
 
     private void hideCalendar() {
-        calendarOverlay.setVisibility(View.GONE);
+        if (calendarOverlay != null) {
+            calendarOverlay.setVisibility(View.GONE);
+        }
     }
 
     private void refreshTimeSlots() {
@@ -288,8 +345,7 @@ public class BookingZoneActivity extends AppCompatActivity {
             timeSlotAdapter.clearSelection();
         }
 
-        // Here you could implement logic to check availability for selected date
-        // For now, we'll just refresh the adapter
+        // Refresh the adapter
         if (timeSlotAdapter != null) {
             timeSlotAdapter.notifyDataSetChanged();
         }
@@ -299,7 +355,7 @@ public class BookingZoneActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PreviewZoneActivity.class);
         intent.putExtra("playstation_id", playstationId);
         intent.putExtra("playstation_name", playstationName);
-        intent.putExtra("playstation_color", playstationColor); // Pass color to PreviewZone
+        intent.putExtra("card_type", cardType);
         intent.putExtra("session_number", timeSlot.getSessionNumber());
         intent.putExtra("time_range", timeSlot.getTimeRange());
         intent.putExtra("duration", timeSlot.getDuration());
@@ -309,7 +365,7 @@ public class BookingZoneActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (calendarOverlay.getVisibility() == View.VISIBLE) {
+        if (calendarOverlay != null && calendarOverlay.getVisibility() == View.VISIBLE) {
             hideCalendar();
         } else {
             super.onBackPressed();

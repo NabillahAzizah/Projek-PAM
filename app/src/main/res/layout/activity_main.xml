@@ -33,26 +33,25 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleText" />
 
     <ImageView
         android:id="@+id/controller1"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="196dp"
+        android:layout_height="204dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/console_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appName" />
 
     <ImageView
         android:id="@+id/controller2"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="210dp"
+        android:layout_height="203dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/console_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appName" />
@@ -61,7 +60,7 @@
         android:id="@+id/subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="28dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Free to Play, Start to Chill"
         android:textColor="@android:color/white"

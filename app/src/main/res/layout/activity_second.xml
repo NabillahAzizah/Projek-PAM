@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -38,31 +38,31 @@
     <!-- Gamepad kanan -->
     <ImageView
         android:id="@+id/gamepadRight"
-        android:layout_width="288dp"
-        android:layout_height="252dp"
+        android:layout_width="265dp"
+        android:layout_height="228dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="-65dp"
-        android:rotation="12"
+        android:rotation="20"
         android:src="@drawable/console_1" />
 
     <!-- Gamepad kiri -->
     <ImageView
         android:id="@+id/gamepadLeft"
-        android:layout_width="232dp"
-        android:layout_height="225dp"
+        android:layout_width="wrap_content"
+        android:layout_height="195dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-67dp"
-        android:layout_marginBottom="446dp"
-        android:rotation="-130"
+        android:layout_marginStart="-64dp"
+        android:layout_marginBottom="405dp"
+        android:rotation="-135"
         android:src="@drawable/console_2" />
 
     <!-- Bubble ungu -->
     <View
         android:id="@+id/purpleBubble"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="460dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_purple_bubble" />
 
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/purpleBubble"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="25dp"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -153,7 +153,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="60dp"
                 android:src="@drawable/ic_google_logo" />
 
             <TextView

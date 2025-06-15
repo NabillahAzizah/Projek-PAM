@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="45dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Please Sign Up\nto Order"
         android:textColor="#FFA726"
@@ -21,21 +21,21 @@
     <!-- Gamepad kiri -->
     <ImageView
         android:id="@+id/gamepadLeft"
-        android:layout_width="167dp"
-        android:layout_height="159dp"
+        android:layout_width="161dp"
+        android:layout_height="144dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="-47dp"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="135dp"
         android:rotation="-133"
         android:src="@drawable/console_2" />
 
     <!-- Gamepad kanan -->
     <ImageView
         android:id="@+id/gamepadRight"
-        android:layout_width="156dp"
-        android:layout_height="178dp"
+        android:layout_width="138dp"
+        android:layout_height="158dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="-30dp"
         android:rotation="15"
         android:src="@drawable/console_1" />
@@ -43,7 +43,7 @@
     <View
         android:id="@+id/purpleBubble"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="545dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_purple_bubble" />
 
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/purpleBubble"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         android:padding="24dp">
 

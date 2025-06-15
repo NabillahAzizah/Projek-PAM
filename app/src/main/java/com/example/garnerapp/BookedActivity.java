@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Typeface;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -18,6 +19,7 @@ public class BookedActivity extends AppCompatActivity {
     private Button cancelButton;
     private Button statusButton;
     private TextView deviceName, userEmail, bookingDate, sessionTime;
+    private TextView inUseText; // Changed from inUseTextView to match layout
     private boolean isBooked = false;
     private boolean isUsed = false;
 
@@ -35,25 +37,21 @@ public class BookedActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.user_email);
         bookingDate = findViewById(R.id.booking_date);
         sessionTime = findViewById(R.id.session_time);
+        inUseText = findViewById(R.id.inUseText);
 
-        // Check booking status
         isBooked = checkBookingStatus();
 
         updateUI();
 
-        // Status button listener
         statusButton.setOnClickListener(v -> {
             if (!isUsed) {
                 isUsed = true;
-                statusButton.setText("Terpakai");
-                statusButton.setEnabled(false);
-                statusButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.gray_400));
                 saveUsageStatus(true);
-                Toast.makeText(this, "Status diubah menjadi Terpakai", Toast.LENGTH_SHORT).show();
+                updateUI();
+                Toast.makeText(this, "Device is now in use", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Cancel button listener
         cancelButton.setOnClickListener(v -> showCancelConfirmationDialog());
     }
 
@@ -68,19 +66,21 @@ public class BookedActivity extends AppCompatActivity {
             emptyLayout.setVisibility(View.GONE);
             cancelButton.setVisibility(View.VISIBLE);
 
-            // Set booking data
             deviceName.setText("Play Station 1");
             userEmail.setText("Khemswahl23@student.ub.ac.id");
             bookingDate.setText("Monday, 26/05/2025");
             sessionTime.setText("08:45 - 09:45 am");
 
-            // Set button state
             if (isUsed) {
-                statusButton.setText("Terpakai");
-                statusButton.setEnabled(false);
-                statusButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.gray_400));
+                statusButton.setVisibility(View.GONE);
+                inUseText.setVisibility(View.VISIBLE);
+                inUseText.setText("In Use");
+                inUseText.setTextColor(ContextCompat.getColor(this, R.color.gray_400));
+                inUseText.setTypeface(null, Typeface.ITALIC);
             } else {
-                statusButton.setText("Tersedia");
+                statusButton.setVisibility(View.VISIBLE);
+                inUseText.setVisibility(View.GONE);
+                statusButton.setText("Use");
                 statusButton.setEnabled(true);
                 statusButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
             }
@@ -115,6 +115,6 @@ public class BookedActivity extends AppCompatActivity {
     }
 
     private void saveUsageStatus(boolean isUsed) {
-        // Save to database implementation
+
     }
 }

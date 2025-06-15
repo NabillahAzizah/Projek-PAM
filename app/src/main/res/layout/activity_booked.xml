@@ -8,7 +8,7 @@
     android:background="@color/white"
     tools:context=".BookedActivity">
 
-    <!-- Header Layout (tetap sama) -->
+    <!-- Header Layout (remains unchanged) -->
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -40,7 +40,7 @@
             android:textColor="@android:color/white" />
     </RelativeLayout>
 
-    <!-- Empty State Layout (diubah dari TextView ke LinearLayout) -->
+    <!-- Empty State Layout (unchanged) -->
     <LinearLayout
         android:id="@+id/empty_layout"
         android:layout_width="match_parent"
@@ -180,17 +180,34 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/statusButton"
+            <!-- Modified section: Wrap Button and In Use text in FrameLayout -->
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/green_500"
-                android:padding="8dp"
-                android:text="Tersedia"
-                android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/statusButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_500"
+                    android:padding="8dp"
+                    android:text="Use"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/inUseText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="In Use"
+                    android:textColor="@color/gray_400"
+                    android:textSize="17sp"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    android:padding="8dp"/>
+            </FrameLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

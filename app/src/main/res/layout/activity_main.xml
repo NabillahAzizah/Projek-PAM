@@ -93,34 +93,41 @@
         android:elevation="8dp"
         android:baselineAligned="false">
 
+        <!-- Bookings Tab -->
         <LinearLayout
+            android:id="@+id/booked_tab"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:focusable="true"
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:id="@+id/av_booked"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/av_booked"
                 android:layout_gravity="center"
                 android:contentDescription="@string/bookings_tab" />
-
         </LinearLayout>
 
+        <!-- Profile Tab -->
         <LinearLayout
+            android:id="@+id/profile_tab"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:focusable="true"
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:id="@+id/av_profile"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/av_profile"

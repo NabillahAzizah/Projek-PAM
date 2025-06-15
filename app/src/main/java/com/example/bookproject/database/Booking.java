@@ -1,4 +1,4 @@
-package com.example.bookproject;
+package com.example.bookproject.database;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,16 +8,16 @@ import java.util.Date;
 public class Booking {
     @PrimaryKey(autoGenerate = true)
     private long id;
+
     private String userId;
     private String deviceId;
     private String deviceName;
     private Date startTime;
     private Date endTime;
-    private String status; // "BOOKED", "DIGUNAKAN", "DIBATALKAN"
+    private String status;
 
     // Constructor
-    public Booking(String userId, String deviceId, String deviceName,
-                   Date startTime, Date endTime, String status) {
+    public Booking(String userId, String deviceId, String deviceName, Date startTime, Date endTime, String status) {
         this.userId = userId;
         this.deviceId = deviceId;
         this.deviceName = deviceName;
@@ -26,60 +26,25 @@ public class Booking {
         this.status = status;
     }
 
-    // Getters and Setters
-    public long getId() {
-        return id;
-    }
+    // Getter dan Setter
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
-    public String getUserId() {
-        return userId;
-    }
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    public String getDeviceName() { return deviceName; }
+    public void setDeviceName(String deviceName) { this.deviceName = deviceName; }
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+    public Date getStartTime() { return startTime; }
+    public void setStartTime(Date startTime) { this.startTime = startTime; }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+    public Date getEndTime() { return endTime; }
+    public void setEndTime(Date endTime) { this.endTime = endTime; }
 
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

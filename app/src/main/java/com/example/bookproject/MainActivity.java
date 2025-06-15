@@ -1,8 +1,9 @@
-//MainActivity.java
+// MainActivity.java
 package com.example.bookproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         setupPlayStationCards();
+        setupBottomNavigation();
     }
 
     private void initViews() {
@@ -54,6 +56,19 @@ public class MainActivity extends AppCompatActivity {
         rvPlaystationCards.setAdapter(playstationAdapter);
     }
 
+    private void setupBottomNavigation() {
+        // Find the booked icon layout in bottom navigation
+        View bookedIconLayout = findViewById(R.id.bottom_navigation).findViewById(R.id.av_booked);
+
+        // Set click listener for booked icon
+        bookedIconLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToBookedActivity();
+            }
+        });
+    }
+
     private void navigateToBookingZone(PlayStation playStation) {
         Intent intent = new Intent(this, BookingZoneActivity.class);
         intent.putExtra("playstation_id", playStation.getId());
@@ -63,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         int cardType = (playStation.getId() - 1) % 2; // 0 = orange, 1 = mint
         intent.putExtra("card_type", cardType);
 
+        startActivity(intent);
+    }
+
+    private void navigateToBookedActivity() {
+        Intent intent = new Intent(this, BookedActivity.class);
         startActivity(intent);
     }
 

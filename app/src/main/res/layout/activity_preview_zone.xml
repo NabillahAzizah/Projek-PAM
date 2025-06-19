@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/gaming_setup_placeholder"
+                    android:src="@drawable/ps_booking"
                     android:background="@color/gray_light"
                     android:contentDescription="@string/gaming_setup_image" />
 

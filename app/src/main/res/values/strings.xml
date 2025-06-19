@@ -67,5 +67,6 @@
     <string name="profile">Profile</string>
     <string name="go_to_booking">Go to booking</string>
     <string name="no_playstation_available">No PlayStation available</string>
+    <string name="default_web_client_id">450642484261-78ms79a5s4sgjoj7lvg34ivami4q8rfa.apps.googleusercontent.com</string>
 
 </resources>

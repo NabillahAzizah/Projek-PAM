@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".SecondActivity">
+
+    <!-- Judul Hello, Sobat Filkom -->
+    <LinearLayout
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello,"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#FFA726" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sobat Filkom"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#FFA726" />
+    </LinearLayout>
+
+    <!-- Gamepad kanan -->
+    <ImageView
+        android:id="@+id/gamepadRight"
+        android:layout_width="265dp"
+        android:layout_height="228dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="-65dp"
+        android:rotation="20"
+        android:src="@drawable/console_1" />
+
+    <!-- Gamepad kiri -->
+    <ImageView
+        android:id="@+id/gamepadLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="195dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-64dp"
+        android:layout_marginBottom="405dp"
+        android:rotation="-135"
+        android:src="@drawable/console_2" />
+
+    <!-- Bubble ungu -->
+    <View
+        android:id="@+id/purpleBubble"
+        android:layout_width="match_parent"
+        android:layout_height="460dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_purple_bubble" />
+
+    <!-- Form login -->
+    <LinearLayout
+        android:id="@+id/formLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/purpleBubble"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Sign In -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Sign In"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"/>
+
+        <!-- Link Sign Up -->
+        <TextView
+            android:id="@+id/signUpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="Don't have any account? Sign Up"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginLeft="15dp" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edittext_white"
+            android:hint="Email Address"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="16sp"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="#888888" />
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_edittext_white"
+            android:hint="Password"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:paddingHorizontal="16dp"
+            android:textColorHint="#888888" />
+
+        <!-- Tombol Sign In -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_signin"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="16sp"
+            android:text="Sign In"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false" />
+
+        <!-- Tombol Sign in with Google -->
+        <LinearLayout
+            android:id="@+id/googleSignInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_button_google"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/ic_google_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Sign In with Google"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

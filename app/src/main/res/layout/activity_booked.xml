@@ -266,24 +266,29 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="150dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/holo_red_dark"
-        android:drawablePadding="8dp"
-        android:text="Cancel"
-        android:textSize="15sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
         android:contentDescription="Cancel the booking"
+        android:drawablePadding="8dp"
+        android:elevation="0dp"
         android:focusable="true"
         android:importantForAccessibility="yes"
+        android:text="Cancel"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/booked_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/booked_layout"></com.google.android.material.button.MaterialButton>
 
 <!--  Navigation Bottom  -->
     <LinearLayout

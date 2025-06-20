@@ -1,6 +1,7 @@
 package com.example.bookproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -50,6 +51,7 @@ public class BookedActivity extends AppCompatActivity {
     // Timer
     private Handler handler;
     private Runnable timerRunnable;
+    private static final long AUTO_CANCEL_DELAY = 10 * 60 * 1000; // 10 minutes in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class BookedActivity extends AppCompatActivity {
         initViews();
         setupClickListeners();
         loadCurrentBooking();
+        setupBottomNavigation();
     }
 
     private void initViews() {
@@ -101,7 +104,7 @@ public class BookedActivity extends AppCompatActivity {
                     Booking booking = bookingSnapshot.getValue(Booking.class);
                     if (booking != null && !booking.getStatus().equals("CANCELLED")) {
                         // Check if this booking is still valid (not expired)
-                        if (booking.isExpired() && booking.getStatus().equals("BOOKED")) {
+                        if (booking.getStatus().equals("BOOKED") && isBookingExpired(booking)) {
                             // Auto-expire the booking
                             expireBooking(booking.getBookingId());
                         } else if (!booking.getStatus().equals("EXPIRED")) {
@@ -123,7 +126,17 @@ public class BookedActivity extends AppCompatActivity {
         };
 
         dbRef.child("bookings").child(currentUser.getUid())
+                .orderByChild("createdAt") // Order by creation time
+                .limitToLast(1) // Only get the most recent booking
                 .addValueEventListener(bookingListener);
+    }
+
+    private boolean isBookingExpired(Booking booking) {
+        if (booking == null) return true;
+        long currentTime = System.currentTimeMillis();
+        // Use the timestamp from the booking object
+        long bookingTime = booking.getCreatedAt(); // Make sure your Booking class has this method
+        return currentTime > bookingTime + AUTO_CANCEL_DELAY;
     }
 
     private void updateUI() {
@@ -176,14 +189,15 @@ public class BookedActivity extends AppCompatActivity {
 
                 inUseText.setVisibility(View.GONE);
                 statusText.setVisibility(View.GONE);
+                timerText.setVisibility(View.VISIBLE);
                 break;
 
             case "IN_USE":
                 statusButton.setVisibility(View.GONE);
                 inUseText.setVisibility(View.VISIBLE);
                 inUseText.setText("In Use");
-                inUseText.setTextColor(ContextCompat.getColor(this, R.color.green_500));
-                inUseText.setTypeface(null, Typeface.BOLD);
+                inUseText.setTextColor(ContextCompat.getColor(this, R.color.gray_medium));
+                inUseText.setTypeface(null, Typeface.ITALIC);
 
                 statusText.setVisibility(View.GONE);
                 timerText.setVisibility(View.GONE);
@@ -225,16 +239,19 @@ public class BookedActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (currentBooking != null && currentBooking.getStatus().equals("BOOKED")) {
-                    long remainingMinutes = currentBooking.getRemainingMinutes();
+                    long bookingTime = currentBooking.getCreatedAt(); // Use the booking's timestamp
+                    long remainingTime = bookingTime + AUTO_CANCEL_DELAY - System.currentTimeMillis();
 
-                    if (remainingMinutes <= 0) {
+                    if (remainingTime <= 0) {
                         // Auto-expire
                         expireBooking(currentBooking.getBookingId());
                         return;
                     }
 
-                    long seconds = ((currentBooking.getExpiresAt() - System.currentTimeMillis()) / 1000) % 60;
-                    timerText.setText(String.format(Locale.getDefault(), "Auto-cancel in: %d:%02d", remainingMinutes, seconds));
+                    long minutes = remainingTime / (60 * 1000);
+                    long seconds = (remainingTime / 1000) % 60;
+                    timerText.setText(String.format(Locale.getDefault(),
+                            "Auto-cancel in: %d:%02d", minutes, seconds));
 
                     handler.postDelayed(this, 1000);
                 }
@@ -264,6 +281,9 @@ public class BookedActivity extends AppCompatActivity {
                 .setValue("IN_USE")
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "PlayStation is now in use", Toast.LENGTH_SHORT).show();
+                    // Update UI
+                    currentBooking.setStatus("IN_USE");
+                    updateUI();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to update status", Toast.LENGTH_SHORT).show();
@@ -282,6 +302,9 @@ public class BookedActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     // Update PlayStation status back to Available
                     updatePlayStationStatus(currentBooking.getPlaystationId(), "Available");
+                    // Update UI
+                    currentBooking.setStatus("EXPIRED");
+                    updateUI();
                 });
     }
 
@@ -324,6 +347,9 @@ public class BookedActivity extends AppCompatActivity {
                     // Update PlayStation status back to Available
                     updatePlayStationStatus(currentBooking.getPlaystationId(), "Available");
                     Toast.makeText(this, "Booking cancelled successfully", Toast.LENGTH_SHORT).show();
+                    // Update UI
+                    currentBooking.setStatus("CANCELLED");
+                    updateUI();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to cancel booking", Toast.LENGTH_SHORT).show();
@@ -341,17 +367,52 @@ public class BookedActivity extends AppCompatActivity {
         }
     }
 
+    private void setupBottomNavigation() {
+        View bottomNavigation = findViewById(R.id.bottom_navigation);
+        if (bottomNavigation == null) return;
+
+        // Find navigation tabs
+        View bookedTab = bottomNavigation.findViewById(R.id.booked_tab);
+        View profileTab = bottomNavigation.findViewById(R.id.profile_tab);
+
+        // Set click listeners
+        if (bookedTab != null) {
+            bookedTab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Already in BookedActivity
+                }
+            });
+        }
+
+        if (profileTab != null) {
+            profileTab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigateToProfileActivity();
+                }
+            });
+        }
+    }
+
+    private void navigateToProfileActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        // Remove listener
-        if (bookingListener != null && mAuth.getCurrentUser() != null) {
-            dbRef.child("bookings").child(mAuth.getCurrentUser().getUid())
-                    .removeEventListener(bookingListener);
-        }
-
-        // Stop timer
+        // Clean up timer
         stopTimer();
+
+        // Remove Firebase listener
+        if (bookingListener != null && dbRef != null) {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                dbRef.child("bookings").child(currentUser.getUid()).removeEventListener(bookingListener);
+            }
+        }
     }
 }

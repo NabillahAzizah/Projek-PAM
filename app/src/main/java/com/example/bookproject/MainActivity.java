@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupPlayStationCards() {
         playstationList = new ArrayList<>();
 
-        // Add 5 PlayStation cards with default "Available" status
         playstationList.add(new PlayStation(1, "Play Station 1", "Available"));
         playstationList.add(new PlayStation(2, "Play Station 2", "Available"));
         playstationList.add(new PlayStation(3, "Play Station 3", "Available"));
@@ -77,27 +76,22 @@ public class MainActivity extends AppCompatActivity {
         playstationStatusListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Update PlayStation status from Firebase
                 for (DataSnapshot statusSnapshot : dataSnapshot.getChildren()) {
                     try {
                         int playstationId = Integer.parseInt(statusSnapshot.getKey());
                         String status = statusSnapshot.child("status").getValue(String.class);
                         Long occupiedUntil = statusSnapshot.child("occupied_until").getValue(Long.class);
 
-                        // Check if the occupied time has expired
                         if ("Occupied".equals(status) && occupiedUntil != null) {
                             if (System.currentTimeMillis() > occupiedUntil) {
-                                // Update status to Available if time has expired
                                 updatePlayStationStatusInFirebase(playstationId, "Available");
                                 status = "Available";
                             }
                         }
 
-                        // Update local list
                         updatePlayStationStatusLocal(playstationId, status != null ? status : "Available");
 
                     } catch (NumberFormatException e) {
-                        // Skip invalid PlayStation IDs
                         continue;
                     }
                 }
@@ -109,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // Listen to PlayStation status changes
         dbRef.child("playstation_status").addValueEventListener(playstationStatusListener);
     }
 
@@ -129,21 +122,29 @@ public class MainActivity extends AppCompatActivity {
                 .child("status").setValue(status);
 
         if ("Available".equals(status)) {
-            // Remove occupied_until when becoming available
             dbRef.child("playstation_status").child(String.valueOf(playstationId))
                     .child("occupied_until").removeValue();
         }
     }
 
     private void setupBottomNavigation() {
-        // Find the booked icon layout in bottom navigation
-        View bookedIconLayout = findViewById(R.id.bottom_navigation).findViewById(R.id.av_booked);
+        View bottomNavigation = findViewById(R.id.bottom_navigation);
 
-        // Set click listener for booked icon
+        // Tombol Booked
+        View bookedIconLayout = bottomNavigation.findViewById(R.id.av_booked);
         bookedIconLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToBookedActivity();
+            }
+        });
+
+        // Tombol Profile
+        View profileIconLayout = bottomNavigation.findViewById(R.id.profile_tab);
+        profileIconLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToProfileActivity();
             }
         });
     }
@@ -152,11 +153,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BookingZoneActivity.class);
         intent.putExtra("playstation_id", playStation.getId());
         intent.putExtra("playstation_name", playStation.getName());
-
-        // Pass card type berdasarkan posisi untuk menentukan background
-        int cardType = (playStation.getId() - 1) % 2; // 0 = orange, 1 = mint
+        int cardType = (playStation.getId() - 1) % 2;
         intent.putExtra("card_type", cardType);
-
         startActivity(intent);
     }
 
@@ -165,10 +163,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void navigateToProfileActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh data when returning from other activities
         if (playstationAdapter != null) {
             playstationAdapter.notifyDataSetChanged();
         }
@@ -177,14 +179,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Remove listener to prevent memory leaks
         if (playstationStatusListener != null) {
             dbRef.child("playstation_status").removeEventListener(playstationStatusListener);
         }
     }
 
-    // PlayStation data model - simplified without color type
     public static class PlayStation {
         private int id;
         private String name;
